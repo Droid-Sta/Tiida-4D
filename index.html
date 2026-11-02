@@ -11,69 +11,142 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(to bottom, #203a43, #2c5364);
             min-height: 100vh;
-            display: flex; justify-content: center; align-items: center;
+            display: flex; justify-content: center; align-items: flex-start;
             color: #fff; padding: 20px;
         }
         .container {
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
-            border-radius: 20px; padding: 30px; max-width: 500px; width: 100%;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px; padding: 25px 20px; max-width: 500px; width: 100%;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+            margin-top: 20px; margin-bottom: 20px;
         }
-        h1 { text-align: center; margin-bottom: 10px; font-size: 1.4rem; letter-spacing: 1px; }
-        .subtitle { text-align: center; opacity: 0.8; margin-bottom: 20px; font-size: 0.9rem; }
+        h1 { text-align: center; margin-bottom: 5px; font-size: 1.3rem; letter-spacing: 0.5px; }
+        .subtitle { text-align: center; opacity: 0.7; margin-bottom: 20px; font-size: 0.85rem; }
 
-        label { display: block; margin-top: 15px; font-size: 0.9rem; opacity: 0.9; }
+        /* Вкладки */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab {
+            flex: 1; padding: 12px; border: none; border-radius: 12px;
+            background: rgba(255,255,255,0.1); color: #9ba3af; cursor: pointer; 
+            font-weight: 600; font-size: 0.95rem; transition: 0.3s;
+        }
+        .tab.active { 
+            background: #4a90e2; color: white; 
+            box-shadow: 0 4px 12px rgba(74,144,226,0.3); 
+        }
+        .mode-block { display: none; animation: fadeIn 0.3s; }
+        .mode-block.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        input[type="file"] {
-            width: 100%; padding: 12px; margin-top: 5px; border-radius: 10px;
-            border: none; background: rgba(255,255,255,0.15); color: #fff;
+        /* Стили для инпутов */
+        .input-group { margin-bottom: 15px; }
+        .input-label { 
+            display: block; margin-bottom: 6px; font-size: 0.8rem; 
+            color: #79a6d2; font-weight: 600; padding-left: 4px;
+        }
+        
+        input[type="file"], input[type="text"] {
+            width: 100%; padding: 14px; border-radius: 10px;
+            border: none; background: rgba(255,255,255,0.1); color: #fff;
             font-size: 1rem; font-family: monospace; letter-spacing: 1px;
-            outline: none; transition: 0.3s; cursor: pointer;
+            outline: none; transition: 0.3s;
+            border-left: 4px solid #4a90e2;
         }
-        input[type="file"]:focus { background: rgba(255,255,255,0.25); box-shadow: 0 0 0 2px #4a90e2; }
+        input[type="file"]:focus, input[type="text"]:focus { 
+            background: rgba(255,255,255,0.15); box-shadow: 0 0 0 2px rgba(74,144,226,0.5); 
+        }
+        
         input[type="file"]::file-selector-button {
             background: #4a90e2; color: white; border: none; padding: 8px 12px;
             border-radius: 8px; margin-right: 10px; font-family: inherit; cursor: pointer;
         }
 
-        .result {
-            margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.3);
-            border-radius: 12px; display: none; word-break: break-all;
-            text-align: center;
+        /* Окна результатов (по дизайну со скриншота) */
+        .result { display: none; margin-top: 25px; }
+        
+        .data-box { margin-bottom: 15px; }
+        .data-box .label { 
+            display: block; font-size: 0.8rem; color: #79a6d2; 
+            font-weight: 600; margin-bottom: 6px; padding-left: 4px;
         }
-        .result-item { margin-bottom: 15px; }
-        .result-item:last-child { margin-bottom: 0; }
-        .result-label { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 0.8rem; opacity: 0.7; letter-spacing: 0; margin-bottom: 5px; }
-        .result-value { font-family: monospace; font-size: 1.2rem; letter-spacing: 2px; color: #ffffff; }
+        .data-box .value {
+            background: #1d2d3d; /* Темный фон плашки */
+            padding: 14px; border-radius: 10px;
+            font-family: monospace; font-size: 1.1rem; letter-spacing: 1px;
+            color: #ffffff; border-left: 4px solid #4a90e2;
+            word-break: break-all;
+        }
 
-        .info { margin-top: 15px; font-size: 0.8rem; opacity: 0.7; text-align: center; }
+        /* Кнопка обработки ручного ввода */
+        button.process-btn {
+            width: 100%; padding: 14px; margin-top: 10px; border: none; border-radius: 12px;
+            background: linear-gradient(135deg, #4a90e2, #357abd); color: white;
+            font-size: 1rem; font-weight: 600; cursor: pointer; 
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button.process-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(74,144,226,0.4); }
+        button.process-btn:active { transform: translateY(0); }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🔑 Nissan Tiida 2005+ (Барашек)</h1>
-        <div class="subtitle">Подготовка транспондера XT27 4D60 по дампу</div>
+        <div class="subtitle">Подготовка транспондера XT27 по дампу</div>
 
-        <label for="fileInput">Загрузите дамп еепром 93C56 (256 bytes)</label>
-        <input type="file" id="fileInput" accept=".bin">
+        <!-- Вкладки -->
+        <div class="tabs">
+            <button class="tab active" data-target="file-mode">Загрузка дампа</button>
+            <button class="tab" data-target="manual-mode">Ручной ввод</button>
+        </div>
 
+        <!-- Режим загрузки файла -->
+        <div id="file-mode" class="mode-block active">
+            <div class="input-group">
+                <label class="input-label">Загрузите дамп еепром 93C56 256 bytes</label>
+                <input type="file" id="fileInput" accept=".bin">
+            </div>
+        </div>
+
+        <!-- Режим ручного ввода -->
+        <div id="manual-mode" class="mode-block">
+            <div class="input-group">
+                <label class="input-label">ID (3 байта, например: DE EB 50)</label>
+                <input type="text" id="manualId" placeholder="DE EB 50" maxlength="8">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Key (5 байт, например: 11 22 33 44 55)</label>
+                <input type="text" id="manualKey" placeholder="11 22 33 44 55" maxlength="14">
+            </div>
+            <button class="process-btn" id="manualProcessBtn">Обработать</button>
+        </div>
+
+        <!-- Блок результатов -->
         <div class="result" id="result">
-            <div class="result-item">
-                <div class="result-label">Password</div>
-                <div class="result-value">A2</div>
+            <div class="data-box">
+                <span class="label">Password</span>
+                <div class="value">A2</div>
             </div>
-            <div class="result-item">
-                <div class="result-label">User</div>
-                <div class="result-value">00</div>
+            
+            <div class="data-box">
+                <span class="label">User</span>
+                <div class="value">00</div>
             </div>
-            <div class="result-item">
-                <div class="result-label">ID</div>
-                <div class="result-value" id="idValue"></div>
+
+            <div class="data-box">
+                <span class="label">ID</span>
+                <div class="value" id="idValue">--</div>
             </div>
-            <div class="result-item">
-                <div class="result-label">Key</div>
-                <div class="result-value" id="keyValue"></div>
+
+            <div class="data-box">
+                <span class="label">Key</span>
+                <div class="value" id="keyValue">--</div>
+            </div>
+
+            <!-- Новое окно Transponder ID -->
+            <div class="data-box">
+                <span class="label">Transponder ID (Full)</span>
+                <div class="value" id="fullIdValue" style="color: #4ade80;">--</div>
             </div>
         </div>
     </div>
@@ -82,15 +155,72 @@
         const tg = window.Telegram.WebApp;
         tg.ready(); tg.expand();
 
+        const tabs = document.querySelectorAll('.tab');
         const fileInput = document.getElementById('fileInput');
+        const manualProcessBtn = document.getElementById('manualProcessBtn');
+        const manualId = document.getElementById('manualId');
+        const manualKey = document.getElementById('manualKey');
+        
         const resultDiv = document.getElementById('result');
         const idValue = document.getElementById('idValue');
         const keyValue = document.getElementById('keyValue');
+        const fullIdValue = document.getElementById('fullIdValue');
 
-        function hexToString(arr) {
-            return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join(' ').toUpperCase();
+        // Переключение вкладок
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.querySelectorAll('.mode-block').forEach(block => block.classList.remove('active'));
+                document.getElementById(this.getAttribute('data-target')).classList.add('active');
+                
+                // Скрываем результат при переключении
+                resultDiv.style.display = 'none';
+            });
+        });
+
+        // Функция форматирования массива байт в HEX строку
+        function formatHex(bytes) {
+            return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join(' ').toUpperCase();
         }
 
+        // Функция парсинга строки HEX в массив байт
+        function parseHexString(str) {
+            const cleanStr = str.replace(/[^0-9A-Fa-f]/g, '');
+            if (cleanStr.length % 2 !== 0) return null; // Нечетное количество символов
+            const result = [];
+            for (let i = 0; i < cleanStr.length; i += 2) {
+                result.push(parseInt(cleanStr.substr(i, 2), 16));
+            }
+            return result;
+        }
+
+        // Главная функция отображения и расчета
+        function processAndRender(idBytes, keyBytes) {
+            // idBytes и keyBytes - это исходные байты (как в дампе)
+            
+            // 1. Password (A2) и User (00) - фиксированные
+            
+            // 2. ID: реверс + байт 0A
+            const idReversed = [...idBytes].reverse();
+            const idWithEnd = [...idReversed, 0x0A];
+            
+            // 3. Key: реверс
+            const keyReversed = [...keyBytes].reverse();
+
+            // 4. Transponder ID: A2 + 00 + ID(с реверсом) + 0A
+            const fullTransponder = [0xA2, 0x00, ...idWithEnd];
+
+            // Отрисовка
+            idValue.innerText = formatHex(idWithEnd);
+            keyValue.innerText = formatHex(keyReversed);
+            fullIdValue.innerText = formatHex(fullTransponder);
+
+            resultDiv.style.display = 'block';
+        }
+
+        // Обработка файла
         fileInput.addEventListener('change', function() {
             const file = fileInput.files[0];
             if (!file) return;
@@ -99,7 +229,6 @@
             reader.onload = function(e) {
                 const data = new Uint8Array(e.target.result);
 
-                // Проверка размера
                 if (data.length !== 256) {
                     alert('Ошибка: размер файла должен быть ровно 256 байт (93C56)!\nВаш файл: ' + data.length + ' байт.');
                     resultDiv.style.display = 'none';
@@ -108,22 +237,41 @@
                     return;
                 }
 
-                // ID по смещению 0x80 (3 байта) с реверсом + 0A
-                const idRaw = data.slice(0x80, 0x83);
-                const idReversed = Array.from(idRaw).reverse();
-                const idResult = [...idReversed, 0x0A];
+                // Извлечение по смещениям
+                const idRaw = data.slice(0x80, 0x83); // 3 байта
+                const keyRaw = data.slice(0x84, 0x89); // 5 байт
 
-                // Key по смещению 0x84 (5 байт) с реверсом
-                const keyRaw = data.slice(0x84, 0x89);
-                const keyResult = Array.from(keyRaw).reverse();
-
-                idValue.innerText = hexToString(idResult);
-                keyValue.innerText = hexToString(keyResult);
-
-                resultDiv.style.display = 'block';
+                processAndRender(idRaw, keyRaw);
                 tg.HapticFeedback.impactOccurred('success');
             };
             reader.readAsArrayBuffer(file);
+        });
+
+        // Обработка ручного ввода
+        manualProcessBtn.addEventListener('click', function() {
+            const idStr = manualId.value.trim();
+            const keyStr = manualKey.value.trim();
+
+            if (!idStr || !keyStr) {
+                alert('Заполните оба поля (ID и Key)!');
+                return;
+            }
+
+            const idBytes = parseHexString(idStr);
+            const keyBytes = parseHexString(keyStr);
+
+            if (!idBytes || idBytes.length !== 3) {
+                alert('Ошибка: ID должен состоять ровно из 3 байт (6 символов HEX).');
+                return;
+            }
+
+            if (!keyBytes || keyBytes.length !== 5) {
+                alert('Ошибка: Key должен состоять ровно из 5 байт (10 символов HEX).');
+                return;
+            }
+
+            processAndRender(idBytes, keyBytes);
+            tg.HapticFeedback.impactOccurred('success');
         });
     </script>
 </body>
