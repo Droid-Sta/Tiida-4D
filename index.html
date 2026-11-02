@@ -92,7 +92,7 @@
 <body>
     <div class="container">
         <h1>🔑 Nissan Tiida 2005+ (Барашек)</h1>
-        <div class="subtitle">Подготовка транспондера XT27 по дампу</div>
+        <div class="subtitle">Подготовка транспондера XT27 4D60 по дампу</div>
 
         <!-- Вкладки -->
         <div class="tabs">
@@ -103,7 +103,7 @@
         <!-- Режим загрузки файла -->
         <div id="file-mode" class="mode-block active">
             <div class="input-group">
-                <label class="input-label">Загрузите дамп еепром 93C56 256 bytes</label>
+                <label class="input-label">Загрузите дамп блока INTELLIGENT KEY еепром 93C56 256 bytes</label>
                 <input type="file" id="fileInput" accept=".bin">
             </div>
         </div>
@@ -111,11 +111,11 @@
         <!-- Режим ручного ввода -->
         <div id="manual-mode" class="mode-block">
             <div class="input-group">
-                <label class="input-label">ID (3 байта, например: DE EB 50)</label>
+                <label class="input-label">ID (3 байта, по смещению: 0x80 пример: 50 EB DE)</label>
                 <input type="text" id="manualId" placeholder="DE EB 50" maxlength="8">
             </div>
             <div class="input-group">
-                <label class="input-label">Key (5 байт, например: 11 22 33 44 55)</label>
+                <label class="input-label">Key (5 байт, по смещению: 0x84 пример: 7F 3E DA 11 92)</label>
                 <input type="text" id="manualKey" placeholder="11 22 33 44 55" maxlength="14">
             </div>
             <button class="process-btn" id="manualProcessBtn">Обработать</button>
